@@ -2,8 +2,7 @@
 
 import json
 import logging
-from typing import Dict, Union
-
+from typing import Union
 
 logger = logging.getLogger()
 logger.setLevel('INFO')
@@ -16,7 +15,7 @@ def process(message: str) -> str:
     return f"The received message is: '{message}'"
 
 
-JSON = Dict[str, Union[int, str, float, 'JSON']]
+JSON = dict[str, Union[int, str, float, 'JSON']]
 
 LambdaEvent = JSON
 LambdaContext = object
@@ -49,25 +48,24 @@ def lambda_handler(event: LambdaEvent, context: LambdaContext) -> LambdaOutput: 
     # Extraction of message from event
     try:
         body = event.get('body', '{}')
-        body = json.loads(body)  
+        body = json.loads(body)
         message = body.get('message', '')
-        
+
         # Treatment
         processed_message = process(message)
 
-        # Return without error
-        return {
-            'statusCode': 200,
-            'body': f'"{processed_message}"'
-        }
-
-        # Return with error
-    except Exception as e:
-        logger.error(f"Error processing event: {e}")
+    # Return with error
+    except ValueError:
+        logger.exception('Error processing event')
         return {
             'statusCode': 500,
-            'body': '"Internal Server Error"'
+            'body': '"Internal Server Error"',
         }
 
-    ...
+    # Return without error
+    else:
+        return {
+            'statusCode': 200,
+            'body': f'"{processed_message}"',
+        }
 

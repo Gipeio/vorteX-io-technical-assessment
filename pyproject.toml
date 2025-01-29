@@ -20,8 +20,13 @@ optional = false
 
 [tool.poetry.group.test.dependencies]
 pytest = "^8.2"
-pytest-cov = "^5.0"
-ruff = "^0.4"
+pytest-cov = "^6.0.0"
+ruff = "^0.9.3"
+
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.9.3"
+pytest-cov = "^6.0.0"
 
 [build-system]
 requires = ["poetry-core"]

@@ -1,5 +1,6 @@
 """Entry points for the application."""
 
+import json
 import logging
 from typing import Dict, Union
 
@@ -45,15 +46,28 @@ def lambda_handler(event: LambdaEvent, context: LambdaContext) -> LambdaOutput: 
 
     """
 
-    # TODO: write the lambda handler in a *robust* manner to:
-    # - fetch the message in the event body of the LambdaEvent
-    # - call the above 'process' function with the message and get the returned value
-    # - return the LambdaOutput with the following format:
-    # {
-    #        'statusCode': XXX,
-    #        'body': 'Return_value_of_process_function',
-    #    }
-    #
+    # Extraction of message from event
+    try:
+        body = event.get('body', '{}')
+        body = json.loads(body)  
+        message = body.get('message', '')
+        
+        # Treatment
+        processed_message = process(message)
+
+        # Return without error
+        return {
+            'statusCode': 200,
+            'body': f'"{processed_message}"'
+        }
+
+        # Return with error
+    except Exception as e:
+        logger.error(f"Error processing event: {e}")
+        return {
+            'statusCode': 500,
+            'body': '"Internal Server Error"'
+        }
 
     ...
 

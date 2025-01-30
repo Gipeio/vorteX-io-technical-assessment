@@ -8,6 +8,10 @@ packages = [{include = "lambda_app"}]
 
 [tool.poetry.dependencies]
 python = "^3.12"
+aws-sam-cli = "^1.119.0"
+pytest = "^8.2"
+pytest-cov = "^6.0.0"
+ruff = "^0.9.3"
 
 [tool.poetry.group.build]
 optional = false

@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lambda-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lambda-app
+  template:
+    metadata:
+      labels:
+        app: lambda-app
+    spec:
+      containers:
+        - name: lambda-app
+          image: gipeio/lambda-app:latest
+          ports:
+            - containerPort: 8080

@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: lambda-app
-          image: localhost:5000/lambda-app:latest
+          image: gipeio/lambda-app:latest
           ports:
             - containerPort: 8080

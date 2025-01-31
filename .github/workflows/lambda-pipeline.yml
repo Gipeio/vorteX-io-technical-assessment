@@ -89,11 +89,6 @@ jobs:
       - name: Pull Docker image from Docker Hub
         run: docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/lambda-app:latest
 
-      - name: Tag and push Docker image to cluster registry
-        run: |
-          docker tag ${{ secrets.DOCKER_HUB_USERNAME }}/lambda-app:latest localhost:5000/lambda-app:latest
-          docker push localhost:5000/lambda-app:latest
-
       - name: Deploy application to Kubernetes
         run: |
           kubectl apply -f kubernetes/deployment.yaml

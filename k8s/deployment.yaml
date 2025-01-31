@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: vortex-lambda-deployment
+  name: lambda-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: vortex-lambda
+      app: lambda-app
   template:
     metadata:
       labels:
-        app: vortex-lambda
+        app: lambda-app
     spec:
       containers:
-      - name: vortex-lambda
-        image: vortex-cluster:5000/vortex-image:latest
-        ports:
-        - containerPort: 80
+        - name: lambda-app
+          image: localhost:5000/lambda-app:latest
+          ports:
+            - containerPort: 8080
